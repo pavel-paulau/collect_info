@@ -55,7 +55,7 @@ class LinuxCollecInfo(CollecInfo):
     TASKS = (
         ('df', 'df -ha'),
         ('dmesg', 'dmesg'),
-        ('free', 'free -h'),
+        ('free', 'free'),
         ('lsmod', 'lsmod'),
         ('mpstat', 'mpstat 1 10'),
         ('netstat', 'netstat -anp'),
