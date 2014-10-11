@@ -68,26 +68,14 @@ class LinuxCollecInfo(CollecInfo):
         ('mounts', 'cat /proc/mounts'),
         ('netstat_raw', 'cat /proc/net/netstat'),
         ('vmstat', 'cat /proc/vmstat'),
-
-        ('cmdline', 'cat /proc/{0}/cmdline'),
-        ('environ', 'cat /proc/{0}/environ'),
-        ('limits', 'cat /proc/{0}/limits'),
-        ('pmap', 'pmap {0}'),
-        ('status', 'cat /proc/{0}/status'),
-
-        ('manifest.xml', 'cat /opt/couchbase-sync-gateway/manifest.xml'),
-        ('runtime_stats', 'curl -s http://127.0.0.1:4985/_stats'),
     )
 
     def __init__(self):
         super(LinuxCollecInfo, self).__init__()
-        self.pid = self.run_cmd('pgrep', 'pgrep sync_gateway')
-        if self.pid:
-            self.pid = self.pid.rstrip().decode('utf-8')
 
     def __call__(self):
         for task, cmd in self.TASKS:
-            stdout = self.run_cmd(task, cmd.format(self.pid))
+            stdout = self.run_cmd(task, cmd)
             if stdout:
                 self.store_stdout(task, stdout)
 
